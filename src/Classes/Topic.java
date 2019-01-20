@@ -12,4 +12,13 @@ public class Topic<K,V> {
     {
         table.get(k);
     }
+    public void show()
+    {
+        for (Map.Entry<K,V> pair : table.entrySet())
+        {
+            K key = pair.getKey();
+            V value = pair.getValue();
+            System.out.println(key + ":" + value);
+        }
+    }
 }

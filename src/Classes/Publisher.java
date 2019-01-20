@@ -1,16 +1,23 @@
 package Classes;
 
-public class Publisher implements Runnable {
-    private String name;
-    private Thread t;
-    Publisher(String threadName)
+public class Publisher<K,V> implements Runnable {
+    private volatile K key;
+    private volatile V value;
+    private Topic topic;
+    public Publisher(Topic topic,K key,V value)
     {
-        name=threadName;
-        t=new Thread(this,name);
-        t.start();
+        if(topic==null) throw new IllegalArgumentException("Topic is null!");
+        else this.topic=topic;
+
+        if(key==null) throw new IllegalArgumentException("Key is null!");
+        else this.key=key;
+
+        if(value==null) throw new IllegalArgumentException("Value is null!");
+        else this.value=value;
+
     }
     @Override
     public void run() {
-
+        topic.write(key,value);
     }
 }

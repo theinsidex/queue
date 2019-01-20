@@ -1,3 +1,4 @@
+import Classes.Publisher;
 import Classes.Queue;
 import Classes.Topic;
 
@@ -9,5 +10,8 @@ public class Main {
         queue.insert(t1);
         queue.insert(t2);
         System.out.println(queue.getSize());
+        Publisher thread1=new Publisher(t1,2,"Hello");
+        t1.show();
+
     }
 }

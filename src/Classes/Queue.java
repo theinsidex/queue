@@ -19,4 +19,8 @@ public class Queue {
     {
     return queue.size();
     }
+    public Topic getFirst()
+    {
+        return queue.get(0);
+    }
 }
