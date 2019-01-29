@@ -1,17 +1,26 @@
-import Classes.Publisher;
-import Classes.Queue;
-import Classes.Topic;
+import Classes.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Queue queue=new Queue();
-        Topic t1=new Topic();
-        Topic t2=new Topic();
-        queue.insert(t1);
-        queue.insert(t2);
-        System.out.println(queue.getSize());
-        Publisher thread1=new Publisher(t1,2,"Hello");
-        t1.show();
+    public static void main(String[] args) throws InterruptedException {
+    ConcurrentQueue queue=new ConcurrentQueue();
+    Topic topic=new Topic();
+    queue.insert(topic);
+    Publisher publisher=new Publisher(topic,4,"Hello");
+    Publisher publisher1=new Publisher(topic, 2,"Double");
+    publisher.start();
+    publisher.join();
+    Storage storage=new Storage();
+    Listener listener=new Listener(topic,storage);
+    Listener listener1=new Listener(topic,storage);
+    listener.start();
+    listener.join();
+        publisher1.start();
+        publisher1.join();
+        publisher1.show();
+     listener1.start();
+    topic.show();
+    publisher.show();
+    storage.show();
 
     }
 }

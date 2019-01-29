@@ -1,8 +1,8 @@
 package Classes;
 
-public class Publisher<K,V> implements Runnable {
-    private volatile K key;
-    private volatile V value;
+public class Publisher<K,V> extends Thread {
+    private  K key;
+    private  V value;
     private Topic topic;
     public Publisher(Topic topic,K key,V value)
     {
@@ -16,8 +16,20 @@ public class Publisher<K,V> implements Runnable {
         else this.value=value;
 
     }
+    public void show()
+    {
+        System.out.println("Publisher"+key+":"+value);
+    }
     @Override
     public void run() {
-        topic.write(key,value);
+        if(!Thread.currentThread().isInterrupted()) {
+            topic.clear();
+            topic.write(key, value);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
